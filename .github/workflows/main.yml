@@ -1,1 +1,34 @@
 
+
+name: Studio workflow check
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check-studio:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Check Studio files
+        run: |
+          echo "Checking English Grammar Video Studio..."
+          if [ -f index.html ]; then
+            echo "Root index.html found."
+          else
+            echo "Root index.html not found."
+          fi
+          if [ -f www/index.html ]; then
+            echo "www/index.html found."
+          else
+            echo "www/index.html not found."
+          fi
+          echo "Workflow check completed."
