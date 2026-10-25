@@ -2,117 +2,282 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#17152f">
-<meta name="description" content="English Grammar Video Studio — create vertical grammar lessons and quizzes for social video.">
-<title>English Grammar Video Studio</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>English Grammar Video Studio — Repair v9 — Topic Sync Fix</title>
 <style>
-:root{color-scheme:light dark;--bg:#111126;--panel:#1b1a38;--panel2:#24234a;--ink:#f7f7ff;--muted:#b8b7d4;--line:#39385f;--violet:#8b7bff;--cyan:#5eead4;--pink:#ff79b8;--radius:18px}
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 12% 0%,#30245d 0,transparent 36%),var(--bg);color:var(--ink);font:15px/1.45 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
-button,input,select,textarea{font:inherit}button{cursor:pointer;border:0;border-radius:12px;padding:12px 15px;font-weight:750;background:var(--violet);color:#fff}button.secondary{background:var(--panel2);border:1px solid var(--line)}button:disabled{opacity:.45;cursor:not-allowed}
-header{max-width:1240px;margin:auto;padding:25px 22px 10px;display:flex;align-items:center;justify-content:space-between;gap:14px}.brand{display:flex;align-items:center;gap:12px}.logo{width:46px;height:46px;border-radius:15px;background:linear-gradient(135deg,var(--violet),var(--pink));display:grid;place-items:center;font-size:23px;box-shadow:0 10px 30px #8b7bff33}.eyebrow{color:var(--cyan);font-size:11px;font-weight:900;letter-spacing:.17em;text-transform:uppercase}h1{font-size:clamp(23px,4vw,34px);line-height:1.1;margin:3px 0}p{color:var(--muted);margin:7px 0}.tag{border:1px solid #514a8c;background:#29244c;border-radius:999px;padding:7px 11px;font-size:12px;white-space:nowrap}
-main{max-width:1240px;margin:auto;padding:14px 22px 40px;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(300px,.95fr);gap:18px}.panel{background:linear-gradient(160deg,#211f42f5,#191831f5);border:1px solid var(--line);border-radius:var(--radius);padding:20px;min-width:0;box-shadow:0 18px 50px #00000018}.panel h2{font-size:17px;margin:0 0 14px}.field-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}.field{display:flex;flex-direction:column;gap:6px;min-width:0}.field.full{grid-column:1/-1}label{font-size:12px;color:#d5d4ee;font-weight:750}input,select,textarea{width:100%;border:1px solid var(--line);border-radius:11px;background:#12122a;color:var(--ink);padding:11px 12px;outline:none}textarea{min-height:74px;resize:vertical}input:focus,select:focus,textarea:focus{border-color:var(--violet);box-shadow:0 0 0 3px #8b7bff22}.actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:16px}.hint{font-size:12px;color:var(--muted);margin-top:11px}.mini-title{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--cyan);font-weight:900;margin:19px 0 8px}.topic-pills{display:flex;gap:7px;flex-wrap:wrap}.pill{border:1px solid var(--line);border-radius:999px;padding:7px 10px;font-size:12px;background:#181733;color:#dddafa;cursor:pointer}.pill:hover{border-color:var(--violet)}
-.preview-area{display:grid;grid-template-columns:minmax(170px,250px) 1fr;gap:17px;align-items:start}.phone{width:100%;aspect-ratio:9/16;border-radius:25px;border:5px solid #414064;background:#080818;overflow:hidden;position:relative;box-shadow:0 18px 45px #0006}.phone canvas{width:100%;height:100%;display:block}.preview-info{min-width:0}.metric{border:1px solid var(--line);border-radius:13px;padding:12px;margin-bottom:9px;background:#15142e}.metric strong{display:block;font-size:19px}.metric span{font-size:11px;color:var(--muted)}.progress{height:5px;background:#343251;border-radius:9px;overflow:hidden;margin:12px 0}.progress span{height:100%;display:block;background:linear-gradient(90deg,var(--violet),var(--cyan));width:0%}.status{font-size:12px;color:var(--cyan);min-height:18px}.timeline{display:flex;gap:6px;margin-top:12px;flex-wrap:wrap}.timeline button{padding:7px 9px;font-size:11px;background:#29264e}.export-note{border-left:3px solid var(--cyan);padding:10px 12px;background:#171d35;border-radius:0 10px 10px 0;font-size:12px;color:#d9e9f2;margin-top:15px}
-footer{max-width:1240px;margin:auto;padding:0 22px 28px;color:var(--muted);font-size:12px}
-@media(max-width:850px){main{grid-template-columns:1fr}.preview-area{grid-template-columns:minmax(140px,45%) 1fr}header{align-items:flex-start}.tag{display:none}}
-@media(max-width:480px){header{padding:20px 14px 8px}main{padding:12px 14px 28px;gap:13px}.panel{padding:15px}.field-grid{grid-template-columns:1fr 1fr}.preview-area{grid-template-columns:minmax(0,1fr);justify-items:center}.phone{width:min(72%,250px)}.preview-info{width:100%;display:grid;grid-template-columns:1fr 1fr;gap:8px}.metric{margin:0}.preview-info .wide{grid-column:1/-1}.actions button{flex:1}}
+:root{--bg:#100d20;--panel:#1b1730;--line:#393252;--ink:#f8f6ff;--muted:#bcb5d4;--accent:#b59cff;--accent2:#67e8d5}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(150deg,#100d20,#17112e 60%,#101d31);color:var(--ink);font:16px/1.45 system-ui,-apple-system,Segoe UI,sans-serif}
+main{max-width:980px;margin:auto;padding:18px}header{padding:10px 0 18px}h1{font-size:clamp(1.6rem,5vw,2.4rem);line-height:1.1;margin:0 0 8px}p{color:var(--muted);margin:6px 0 14px}.pill{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:5px 10px;color:var(--accent2);font-size:.82rem}
+.layout{display:grid;grid-template-columns:1fr;gap:16px}@media(min-width:780px){.layout{grid-template-columns:360px 1fr}}
+.panel{background:#1b1730dd;border:1px solid var(--line);border-radius:18px;padding:16px;min-width:0}label{display:block;color:#e3ddf7;font-weight:650;font-size:.9rem;margin:12px 0 5px}input,select,textarea{width:100%;border:1px solid #4a4168;border-radius:10px;background:#100d20;color:var(--ink);padding:11px;font:inherit}textarea{min-height:76px;resize:vertical}button{border:0;border-radius:11px;padding:11px 14px;font:inherit;font-weight:750;cursor:pointer;background:var(--accent);color:#171126}button.secondary{background:#302847;color:var(--ink);border:1px solid #4a4168}button:disabled{opacity:.45;cursor:not-allowed}.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}.preview-wrap{display:flex;justify-content:center;background:#0b0913;border-radius:15px;padding:12px}.canvas-shell{width:min(100%,360px);aspect-ratio:9/16;position:relative}canvas{display:block;width:100%;height:100%;border-radius:10px;background:#17112b}.scene-nav{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}.scene-nav button{font-size:.8rem;padding:7px 9px}.status{margin-top:12px;padding:10px;border-radius:10px;background:#100d20;color:var(--accent2);font-size:.9rem;min-height:40px}.note{font-size:.83rem;color:var(--muted)}.answer-list{display:grid;gap:7px;margin-top:8px}.answer-list div{border:1px solid #51476f;border-radius:9px;padding:8px 10px}.hidden{display:none!important}
 </style>
 </head>
 <body>
-<header>
- <div class="brand"><div class="logo">✦</div><div><div class="eyebrow">Creator toolkit</div><h1>English Grammar Video Studio</h1><p>Turn grammar into scroll-stopping lessons.</p></div></div>
- <div class="tag">9:16 · 1080 × 1920 · MP4 workflow</div>
-</header>
+<noscript><div style="margin:12px;padding:16px;background:#fff0cc;color:#231900;border-radius:12px">JavaScript is disabled in this viewer. Please open this HTML file in Google Chrome with JavaScript enabled.</div></noscript>
 <main>
+<header>
+<span class="pill">REPAIR v9 · TOPIC-SYNC FIX · NO VOICE</span>
+<h1>English Grammar Video Studio</h1>
+<p>Create silent vertical grammar quiz videos or mini-lessons using a carefully level-graded topic bank with 120 curated grammar topics (20 per CEFR level). Each listed topic loads its own example, choices, and explanation.</p>
+</header>
+<div class="layout">
 <section class="panel">
- <h2>✍️ Build your lesson</h2>
- <div class="field-grid">
-  <div class="field"><label for="kind">VIDEO FORMAT</label><select id="kind"><option value="quiz">Tricky quiz + answer reveal</option><option value="lesson">Mini grammar lesson</option></select></div>
-  <div class="field"><label for="level">CEFR LEVEL</label><select id="level"><option>A1</option><option>A2</option><option>B1</option><option>B2</option><option selected>C1</option><option>C2</option></select></div>
-  <div class="field full"><label for="topic">GRAMMAR TOPIC</label><select id="topic"></select></div>
-  <div class="field full"><label for="headline">VIDEO HOOK / TITLE</label><input id="headline" value="Can you spot the grammar trap?"></div>
-  <div class="field full"><label for="question">QUESTION OR LESSON TEXT</label><textarea id="question">If I ___ you, I would accept the offer.</textarea></div>
-  <div class="field"><label for="optA">OPTION A</label><input id="optA" value="am"></div>
-  <div class="field"><label for="optB">OPTION B</label><input id="optB" value="were"></div>
-  <div class="field"><label for="optC">OPTION C</label><input id="optC" value="will be"></div>
-  <div class="field"><label for="answer">CORRECT ANSWER</label><select id="answer"><option value="A">A</option><option value="B" selected>B</option><option value="C">C</option></select></div>
-  <div class="field full"><label for="explanation">EXPLANATION</label><textarea id="explanation">Use “were” in the second conditional to describe an unreal or hypothetical situation: “If I were you…”</textarea></div>
-  <div class="field"><label for="duration">VIDEO LENGTH</label><select id="duration"><option value="12">12 seconds</option><option value="20" selected>20 seconds</option><option value="30">30 seconds</option><option value="45">45 seconds</option></select></div>
-  <div class="field"><label for="theme">VISUAL STYLE</label><select id="theme"><option value="neon">Neon classroom</option><option value="paper">Clean editorial</option><option value="sunset">Sunset pop</option></select></div>
-  <div class="field"><label for="voice">VOICE / NARRATION</label><select id="voice"><option value="none">No voice (captions only)</option><option value="en">English browser voice</option><option value="ar">Arabic browser voice</option><option value="both">English then Arabic</option></select></div>
-  <div class="field"><label for="speed">VOICE SPEED</label><select id="speed"><option value="0.85">Slow and clear</option><option value="1" selected>Natural</option><option value="1.12">Energetic</option></select></div>
- </div>
- <div class="mini-title">Quick topic starters</div>
- <div class="topic-pills" id="pills"></div>
- <div class="actions"><button id="generate">✦ Generate video scenes</button><button class="secondary" id="random">↻ Random topic</button><button class="secondary" id="speak">🔊 Preview voice</button></div>
- <p class="hint">Browser voices depend on your device. Voice preview uses speech synthesis if available; it is not studio-quality audio.</p>
+<h2 style="margin:0">Video setup</h2>
+<label for="kind">Video type</label><select id="kind"><option value="quiz">Grammar quiz</option><option value="lesson">Grammar lesson</option></select>
+<label for="level">CEFR level</label><select id="level"><option>A1</option><option>A2</option><option>B1</option><option>B2</option><option>C1</option><option>C2</option></select>
+<label for="topic">Grammar topic</label><select id="topic">
+<option value="0">Present simple: routines</option><option value="1">Be: am/is/are</option><option value="2">Subject pronouns</option><option value="3">Possessive adjectives</option><option value="4">Articles: a/an</option><option value="5">Plural nouns</option><option value="6">There is/are</option><option value="7">Have got</option><option value="8">Can for ability</option><option value="9">Imperatives</option><option value="10">Prepositions of place</option><option value="11">This/that/these/those</option><option value="12">Countable/uncountable</option><option value="13">Question words</option><option value="14">Present continuous</option><option value="15">Like + -ing</option><option value="16">Possessive 's</option><option value="17">Past of be</option><option value="18">Basic past simple</option><option value="19">Adverbs of frequency</option>
+</select><p class="note" id="topicCount">20 curated topics for this level · silent MP4 video export</p>
+<label for="headline">Video title</label><input id="headline" value="Can you choose the correct tense?">
+<label for="question" id="questionLabel">Question / example</label><textarea id="question">Mina ___ breakfast at seven.</textarea>
+<div id="optionsGroup">
+<label>Answer choices (quiz only)</label>
+<input id="optA" value="eat">
+<input id="optB" value="eats">
+<input id="optC" value="eating">
+<label for="answer">Correct answer</label><select id="answer"><option value="B">B</option><option value="A">A</option><option value="C">C</option></select>
+</div>
+<label for="explanation">Explanation / key point</label><textarea id="explanation">Use the -s form with he, she, or it in the present simple.</textarea>
+<label for="duration">Video duration</label><select id="duration"><option value="12">12 seconds</option><option value="20" selected>20 seconds</option><option value="30">30 seconds</option><option value="45">45 seconds</option></select>
+
+<div class="actions"><button id="build">Build scenes</button></div>
+<p class="status" id="status" role="status" aria-live="polite">Ready. Choose a topic, then tap Build scenes.</p>
+<p class="note">Each topic includes its own example, answer choices, answer key, and explanation. Review before publishing. Export silent MP4 video for downloading. The first MP4 export may need an internet connection to load the converter.</p>
 </section>
 <section class="panel">
- <h2>📱 Reel preview & export</h2>
- <div class="preview-area">
-  <div class="phone"><canvas id="canvas" width="540" height="960" aria-label="Vertical video preview"></canvas></div>
-  <div class="preview-info">
-   <div class="metric"><strong id="sceneCount">4 scenes</strong><span>Auto storyboard</span></div>
-   <div class="metric"><strong>9:16</strong><span>Vertical format</span></div>
-   <div class="metric"><strong id="timeLabel">20 sec</strong><span>Target length</span></div>
-   <div class="metric"><strong>MP4*</strong><span>Export option</span></div>
-   <div class="wide"><div class="progress"><span id="progress"></span></div><div class="status" id="status">Ready to create your first video.</div></div>
-   <div class="timeline wide" id="timeline"></div>
-   <div class="actions wide" style="margin-top:13px"><button id="play">▶ Preview animation</button><button class="secondary" id="export">⬇ Export video</button></div>
-  </div>
- </div>
- <div class="export-note"><b>Free browser export:</b> this prototype records the animated canvas to WebM where supported. Some browsers cannot encode MP4 directly; convert the WebM to MP4 with a trusted video editor before posting. No video is uploaded to a server.</div>
- <div class="actions"><button class="secondary" id="downloadPoster">Save poster PNG</button><button class="secondary" id="downloadScript">Export script (.txt)</button></div>
+<h2 style="margin:0 0 10px">Vertical preview</h2>
+<div class="preview-wrap"><div class="canvas-shell"><canvas id="canvas" width="540" height="960"></canvas></div></div>
+<div class="scene-nav" id="sceneNav"></div>
+<div class="actions"><button id="prev" class="secondary">← Previous</button><button id="next" class="secondary">Next →</button><button id="play">▶ Preview animation</button><button id="export">Export MP4 video</button></div>
+<div class="actions"><button id="poster" class="secondary">Save poster PNG</button><button id="script" class="secondary">Save script TXT</button></div>
+<div class="status" id="previewStatus" role="status" aria-live="polite">Preview status: build scenes to begin.</div>
+<p class="note">For Facebook Reels, use vertical 9:16 video. Please review every generated example and explanation before publishing.</p>
 </section>
+</div>
 </main>
-<footer>Grammar Studio prototype · Works as a static GitHub Pages website. AI voices and cloud rendering are not included; this version uses your browser's installed speech voices where available.</footer>
 <script>
-const topics = {
- A1:[["Present simple","She ___ to work every day.","go","goes","going","B","Use the third-person singular form “goes” with she/he/it."],["Articles","I saw ___ elephant at the zoo.","a","an","the","B","Use “an” before a vowel sound: an elephant."],["There is / are","There ___ two books on the desk.","is","are","be","B","Use “there are” with plural nouns."],["Can / can't","___ you swim?","Can","Are","Do","A","Use “can” to ask about ability."]],
- A2:[["Past simple","We ___ the museum yesterday.","visit","visited","have visit","B","Use the past simple for a finished action at a definite past time."],["Comparatives","This test is ___ than the last one.","easy","easier","easiest","B","Short adjectives usually take -er in comparisons."],["Some / any","There isn't ___ milk left.","some","any","many","B","“Any” is common in negative sentences."],["Present continuous","Look! It ___ outside.","rains","is raining","rained","B","Use the present continuous for an action happening now."]],
- B1:[["Second conditional","If I ___ more time, I'd learn Arabic.","have","had","will have","B","Use past simple in the if-clause of the second conditional."],["Present perfect","I've lived here ___ 2020.","for","since","during","B","Use “since” with the starting point of a period."],["Gerunds","She suggested ___ earlier.","leave","to leave","leaving","C","“Suggest” is followed by a gerund when an activity is proposed."],["Relative clauses","The woman ___ called you is my aunt.","which","who","where","B","Use “who” for a person in a defining relative clause."]],
- B2:[["Inversion","Rarely ___ such a moving performance.","I have seen","have I seen","I saw","B","Negative adverbials at the beginning trigger subject–auxiliary inversion."],["Wish","I wish I ___ so much money yesterday.","didn't spend","hadn't spent","wouldn't spend","B","Use wish + past perfect to express regret about the past."],["Cleft sentences","It was Maya ___ solved the puzzle.","which","whose","who","C","Use “It was … who” to emphasize a person."],["Mixed conditional","If he'd studied medicine, he ___ a doctor now.","would be","will be","would have been","A","Past condition with a present result takes a mixed conditional."]],
- C1:[["Second conditional","If I ___ you, I would accept the offer.","am","were","will be","B","Use “were” in the second conditional for an unreal or hypothetical situation."],["If vs whether","We haven't decided ___ to stay or leave.","if","whether","that","B","“Whether” is especially natural before “or” when presenting alternatives."],["Participle clauses","___ the report, she sent it to the director.","Having finished","Have finished","To finishing","A","“Having + past participle” shows an action completed before the next action."],["Subjunctive","The committee recommended that he ___ present.","is","be","was","B","Formal mandative subjunctive uses the base form: “that he be present.”"]],
- C2:[["Inversion","Not until midnight ___ the truth.","she discovered","did she discover","she had discover","B","After fronted “not until,” invert the auxiliary and subject."],["Advanced conditionals","Had I known, I ___ you earlier.","would tell","would have told","will have told","B","“Had I known” is an inverted third conditional; the result uses would have + past participle."],["Concession","Much ___ I admire him, I disagree.","although","as","despite","B","“Much as I admire him” is a formal concessive construction."],["Subjunctive","It is essential that every applicant ___ the form.","completes","complete","completed","B","The formal subjunctive uses the base form after “it is essential that.”"]]
-};
 const $=id=>document.getElementById(id);
-let scenes=[],current=0,animFrame=null,recordedChunks=[],mediaRecorder=null;
-function fillTopics(){const level=$("level").value;const select=$("topic");select.innerHTML="";topics[level].forEach((t,i)=>{let o=document.createElement("option");o.value=i;o.textContent=t[0];select.appendChild(o)});makePills();loadTopic()}
-function loadTopic(){const t=topics[$("level").value][+$("topic").value||0];if(!t)return;$("headline").value="Can you master "+t[0]+"?";$("question").value=t[1];$("optA").value=t[2];$("optB").value=t[3];$("optC").value=t[4];$("answer").value=t[5];$("explanation").value=t[6];buildScenes()}
-function makePills(){const wrap=$("pills");wrap.innerHTML="";topics[$("level").value].slice(0,4).forEach((t,i)=>{const b=document.createElement("button");b.className="pill";b.textContent=t[0];b.onclick=()=>{$("topic").value=i;loadTopic()};wrap.appendChild(b)})}
-function values(){return {kind:$("kind").value,level:$("level").value,topic:topics[$("level").value][+$("topic").value]?.[0]||"Grammar",headline:$("headline").value.trim()||"English Grammar Challenge",question:$("question").value.trim(),opts:[$("optA").value,$("optB").value,$("optC").value],answer:$("answer").value,explanation:$("explanation").value.trim(),duration:+$("duration").value,theme:$("theme").value,voice:$("voice").value,speed:+$("speed").value}}
-function buildScenes(){const v=values();if(v.kind==="quiz"){scenes=[{type:"hook",title:v.headline,sub:v.level+" • "+v.topic},{type:"question",title:"CHOOSE THE CORRECT ANSWER",sub:v.question,opts:v.opts},{type:"reveal",title:"THE ANSWER IS "+v.answer,sub:v.opts["ABC".indexOf(v.answer)],opts:v.opts},{type:"explain",title:"WHY?",sub:v.explanation,cta:"Save this • Follow for more"}]}else{scenes=[{type:"hook",title:v.topic,sub:v.level+" GRAMMAR IN 30 SECONDS"},{type:"question",title:"EXAMPLE",sub:v.question,opts:v.opts},{type:"reveal",title:"KEY POINT",sub:v.explanation,opts:v.opts},{type:"explain",title:"TRY IT YOURSELF",sub:"Pause the video and write your own example.",cta:"Save this lesson"}]}current=0;render();$("sceneCount").textContent=scenes.length+" scenes";$("timeLabel").textContent=v.duration+" sec";$("status").textContent="Scenes ready. Preview or export your video.";const tl=$("timeline");tl.innerHTML="";scenes.forEach((s,i)=>{let b=document.createElement("button");b.textContent=(i+1)+". "+s.type;b.onclick=()=>{current=i;render()};tl.appendChild(b)})}
-function palette(theme){return theme==="paper"?["#f8f5ec","#19152e","#6755d9","#e2d8ff"]:theme==="sunset"?["#40152c","#fff5f4","#ff8a5b","#ffd166"]:["#11112b","#f8f7ff","#8b7bff","#5eead4"]}
-function wrapText(ctx,text,maxWidth){let words=String(text||"").split(/\s+/),lines=[],line="";for(const word of words){let test=line?line+" "+word:word;if(ctx.measureText(test).width>maxWidth&&line){lines.push(line);line=word}else line=test}if(line)lines.push(line);return lines}
-function drawScene(index,progress=0){const c=$("canvas"),ctx=c.getContext("2d"),v=values(),s=scenes[index]||scenes[0],[bg,fg,accent,accent2]=palette(v.theme);ctx.fillStyle=bg;ctx.fillRect(0,0,c.width,c.height);let g=ctx.createLinearGradient(0,0,c.width,c.height);g.addColorStop(0,accent+"38");g.addColorStop(1,accent2+"20");ctx.fillStyle=g;ctx.fillRect(0,0,c.width,c.height);
-ctx.fillStyle=accent;ctx.beginPath();ctx.arc(470,95,95,0,Math.PI*2);ctx.fill();ctx.globalAlpha=.22;ctx.beginPath();ctx.arc(60,780,140,0,Math.PI*2);ctx.fill();ctx.globalAlpha=1;
-ctx.fillStyle=accent2;ctx.font="bold 22px system-ui";ctx.fillText("ENGLISH GRAMMAR QUEST",42,64);ctx.fillStyle=fg;ctx.globalAlpha=.8;ctx.font="bold 18px system-ui";ctx.fillText(v.level+"  /  "+v.topic.toUpperCase(),42,105);ctx.globalAlpha=1;
-ctx.fillStyle=fg;ctx.font="900 44px system-ui";let titleLines=wrapText(ctx,s.title||"",450);let y=230;titleLines.slice(0,4).forEach(line=>{ctx.fillText(line,42,y);y+=55});
-if(s.sub){ctx.font="600 29px system-ui";let lines=wrapText(ctx,s.sub,450);y=Math.max(y+22,380);lines.slice(0,6).forEach(line=>{ctx.fillStyle=fg;ctx.fillText(line,42,y);y+=42})}
-if(s.opts){let oy=640;s.opts.forEach((opt,i)=>{ctx.fillStyle=(s.type==="reveal"&&"ABC"[i]===v.answer)?accent2:"#ffffff18";ctx.strokeStyle=(s.type==="reveal"&&"ABC"[i]===v.answer)?accent2:"#ffffff35";ctx.lineWidth=2;roundRect(ctx,32,oy+i*76,476,60,16,true,true);ctx.fillStyle=(s.type==="reveal"&&"ABC"[i]===v.answer)?bg:fg;ctx.font="bold 24px system-ui";ctx.fillText("ABC"[i]+".  "+opt,53,oy+39+i*76)})}
-if(s.cta){ctx.fillStyle=accent2;ctx.font="bold 22px system-ui";ctx.fillText(s.cta,42,865)}
-ctx.fillStyle=fg;ctx.globalAlpha=.65;ctx.font="bold 18px system-ui";ctx.fillText("FOLLOW FOR DAILY ENGLISH",42,918);ctx.globalAlpha=1;ctx.fillStyle="#ffffff33";ctx.fillRect(0,948,540,12);ctx.fillStyle=accent2;ctx.fillRect(0,948,540,12*((index+progress)/Math.max(scenes.length,1)))}
-function roundRect(ctx,x,y,w,h,r,fill,stroke){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();if(fill)ctx.fill();if(stroke)ctx.stroke()}
-function render(){drawScene(current);$("progress").style.width=(current+1)/scenes.length*100+"%"}
-function randomTopic(){const levs=Object.keys(topics),l=levs[Math.floor(Math.random()*levs.length)],i=Math.floor(Math.random()*topics[l].length);$("level").value=l;fillTopics();$("topic").value=i;loadTopic()}
-function scriptText(){const v=values();return `ENGLISH GRAMMAR VIDEO STUDIO\nTitle: ${v.headline}\nLevel: ${v.level}\nTopic: ${v.topic}\nFormat: ${v.kind}\n\n${scenes.map((s,i)=>`SCENE ${i+1} — ${s.type.toUpperCase()}\n${s.title}\n${s.sub||""}\n${s.opts?s.opts.map((o,j)=>"ABC"[j]+". "+o).join("\n"):""}\n${s.cta||""}`).join("\n\n")}\n\nExplanation: ${v.explanation}\nAnswer: ${v.answer}\n` }
-function speakText(){if(!("speechSynthesis"in window)){ $("status").textContent="Speech synthesis is not available in this browser.";return}speechSynthesis.cancel();const v=values(),textToSay=v.voice==="ar"?"اختبر معلوماتك في قواعد اللغة الإنجليزية. "+v.explanation:v.voice==="both"?v.headline+". "+v.question+". The answer is "+v.opts["ABC".indexOf(v.answer)]+". "+v.explanation+". الآن جرّب بنفسك.":v.headline+". "+v.question+". The answer is "+v.opts["ABC".indexOf(v.answer)]+". "+v.explanation;const u=new SpeechSynthesisUtterance(textToSay);u.rate=v.speed;if(v.voice==="ar")u.lang="ar";else u.lang="en-US";const voices=speechSynthesis.getVoices();const wanted=voices.find(x=>x.lang.toLowerCase().startsWith(v.voice==="ar"?"ar":"en"));if(wanted)u.voice=wanted;speechSynthesis.speak(u);$("status").textContent="Playing browser voice preview…"}
-async function animatePreview(){if(animFrame)cancelAnimationFrame(animFrame);const start=performance.now(),total=values().duration*1000;function tick(now){const p=Math.min(1,(now-start)/total),scene=Math.min(scenes.length-1,Math.floor(p*scenes.length));current=scene;drawScene(scene,p*scenes.length-scene);$("progress").style.width=p*100+"%";if(p<1)animFrame=requestAnimationFrame(tick);else{$("status").textContent="Preview complete.";current=0;render()}}$("status").textContent="Playing storyboard animation…";animFrame=requestAnimationFrame(tick)}
-async function exportVideo(){buildScenes();if(!("MediaRecorder"in window)||!$("canvas").captureStream){$("status").textContent="This browser cannot record the canvas. Save the poster and script, or try a desktop Chrome browser.";return}const canvas=$("canvas"),stream=canvas.captureStream(30),mimeTypes=["video/webm;codecs=vp9","video/webm;codecs=vp8","video/webm"];const mime=mimeTypes.find(t=>MediaRecorder.isTypeSupported(t));if(!mime){$("status").textContent="No supported video recording format found in this browser.";return}recordedChunks=[];try{mediaRecorder=new MediaRecorder(stream,{mimeType:mime});mediaRecorder.ondataavailable=e=>{if(e.data.size)recordedChunks.push(e.data)};mediaRecorder.onstop=()=>{const blob=new Blob(recordedChunks,{type:mime}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="english-grammar-reel.webm";a.click();setTimeout(()=>URL.revokeObjectURL(url),5000);stream.getTracks().forEach(t=>t.stop());$("status").textContent="Export complete: WebM video saved. Convert to MP4 if required."};mediaRecorder.start();const v=values(),sceneMs=v.duration*1000/scenes.length,start=performance.now();function step(now){const elapsed=now-start,idx=Math.min(scenes.length-1,Math.floor(elapsed/sceneMs));current=idx;drawScene(idx,(elapsed%sceneMs)/sceneMs);$("progress").style.width=Math.min(100,elapsed/(v.duration*1000)*100)+"%";$("status").textContent="Recording scene "+(idx+1)+" of "+scenes.length+"…";if(elapsed<v.duration*1000){requestAnimationFrame(step)}else{drawScene(scenes.length-1,1);setTimeout(()=>mediaRecorder&&mediaRecorder.state!=="inactive"&&mediaRecorder.stop(),350)}}requestAnimationFrame(step)}catch(e){$("status").textContent="Video export failed in this browser. Try Chrome or save the poster/script."}}
-$("level").addEventListener("change",()=>{try{fillTopics()}catch(e){$("status").textContent="Topic loading failed: "+e.message;console.error(e)}});$("topic").addEventListener("change",()=>{try{loadTopic()}catch(e){$("status").textContent="Topic loading failed: "+e.message;console.error(e)}});["kind","headline","question","optA","optB","optC","answer","explanation","duration","theme"].forEach(id=>$(id).addEventListener("input",()=>{buildScenes()}));$("generate").onclick=()=>{buildScenes();$("status").textContent="New storyboard generated. Use Preview animation or Export video.";};$("random").onclick=randomTopic;$("speak").onclick=speakText;$("play").onclick=animatePreview;$("export").onclick=exportVideo;$("downloadPoster").onclick=()=>{render();const a=document.createElement("a");a.download="grammar-reel-poster.png";a.href=$("canvas").toDataURL("image/png");a.click()};$("downloadScript").onclick=()=>{const blob=new Blob([scriptText()],{type:"text/plain;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="grammar-video-script.txt";a.click();URL.revokeObjectURL(url)};
+function setStatus(message){["status","previewStatus"].forEach(id=>{const el=$(id);if(el)el.textContent=message;});}
+const bank={"A1":[["Present simple: routines","Mina ___ breakfast at seven.","eat","eats","eating","B","Use the -s form with he, she, or it in the present simple."],["Be: am/is/are","They ___ from Egypt.","is","are","am","B","Use “are” with the subject “they.”"],["Subject pronouns","Ahmed and I are friends. ___ study together.","We","They","You","A","Use “we” for the speaker and one or more other people."],["Possessive adjectives","I have a cat. ___ name is Luna.","Its","It's","It","A","Use “its” to show possession; “it's” means “it is.”"],["Articles: a/an","She is ___ engineer.","a","an","the","B","Use “an” before a vowel sound, as in “engineer.”"],["Plural nouns","One child, two ___.","childs","children","childes","B","“Children” is the irregular plural of “child.”"],["There is/are","There ___ three chairs in the room.","is","are","be","B","Use “there are” with plural nouns."],["Have got","He ___ got two sisters.","have","has","having","B","Use “has got” with he, she, and it."],["Can for ability","My brother ___ swim very well.","can","does","is","A","Use “can” plus the base verb to describe ability."],["Imperatives","Please ___ the door quietly.","to close","closing","close","C","Imperatives use the base verb without “to.”"],["Prepositions of place","The keys are ___ the table.","on","at","to","A","Use “on” when something rests on a surface."],["This/that/these/those","Look at ___ stars up there!","this","these","those","C","Use “those” for plural things that are far away."],["Countable/uncountable","Can I have some ___, please?","waters","water","a water","B","“Water” is usually uncountable when referring to the substance."],["Question words","___ is your birthday? In May.","Where","When","Who","B","Use “when” to ask about time."],["Present continuous","Be quiet! The baby ___.","sleeps","is sleeping","sleep","B","Use the present continuous for an action happening now."],["Like + -ing","I like ___ books before bed.","read","to reading","reading","C","“Like” can be followed by a gerund (-ing form)."],["Possessive 's","This is Sara's bag. It is ___.","her","hers","she","B","Use the possessive pronoun “hers” without a noun after it."],["Past of be","We ___ at home yesterday.","was","were","are","B","Use “were” with “we” in the past."],["Basic past simple","Yesterday, Ali ___ football.","play","played","plays","B","Use the past simple for a finished past action."],["Adverbs of frequency","She ___ walks to school; she walks every day.","never","always","rare","B","“Always” fits a habit that happens every day."]],"A2":[["Past simple: irregular verbs","We ___ a great film last night.","see","saw","seen","B","“Saw” is the past simple form of “see.”"],["Past continuous","At eight last night, I ___ dinner.","cooked","was cooking","have cooked","B","Use past continuous for an action in progress at a past time."],["Past simple vs continuous","I ___ when the phone rang.","was sleeping","slept","am sleeping","A","The longer background action uses past continuous."],["Comparatives","This road is ___ than the old one.","narrower","narrowest","more narrowest","A","Use “-er” with many short adjectives for comparisons."],["Superlatives","That was the ___ meal of the trip.","better","best","good","B","Use “the best” to compare one item with the whole group."],["Some/any","Are there ___ eggs in the fridge?","some","any","much","B","“Any” is common in questions about whether something exists."],["Much/many","How ___ people came to the party?","much","many","little","B","Use “many” with countable plural nouns such as “people.”"],["Should for advice","You look tired. You ___ get some rest.","should","mustn't","would","A","Use “should” to give advice."],["Must/mustn't","You ___ touch that wire; it is dangerous.","must","mustn't","don't have to","B","“Mustn't” expresses prohibition."],["Have to","I ___ wear a uniform at work; it is required.","have to","could","might to","A","Use “have to” for an obligation."],["Going to: plans","We ___ visit our cousins this weekend.","are going to","going","will to","A","Use “be going to” for an intention or plan."],["Will: predictions","I think it ___ rain later.","is","will","going","B","Use “will” for a prediction about the future."],["Present perfect: ever","Have you ___ tried sushi?","ever","never","yet","A","“Ever” is common in present-perfect questions about experience."],["Present perfect: yet","She hasn't called me ___.","already","yet","just","B","“Yet” commonly appears at the end of negative present-perfect sentences."],["For/since","They have lived here ___ 2021.","for","since","during","B","Use “since” with the starting point."],["Too/enough","This box is ___ heavy for me to lift.","too","enough","very enough","A","“Too + adjective” means more than is manageable."],["Infinitive of purpose","I went to the shop ___ some bread.","buy","buying","to buy","C","Use “to + base verb” to explain purpose."],["Adverbs vs adjectives","He drives very ___.","careful","carefully","care","B","Use an adverb to describe how someone drives."],["First conditional","If it rains, we ___ at home.","stay","will stay","stayed","B","Use present simple in the if-clause and will + verb for the likely result."],["Object pronouns","Please give the keys to ___.","I","me","my","B","A preposition such as “to” takes an object pronoun."]],"B1":[["Second conditional","If I ___ more time, I'd learn Arabic.","have","had","will have","B","Use past simple in the if-clause for an unreal or unlikely present situation."],["Present perfect vs past simple","I ___ her in 2022.","have met","met","had met","B","A finished time such as “in 2022” takes past simple."],["Present perfect continuous","I've been ___ for an hour.","wait","waiting","waited","B","Use have/has been + -ing for an activity continuing over a period."],["Past perfect","Mina ___ breakfast at seven.","started","had started","has started","B","Past perfect marks an event completed before another past event."],["Used to","We ___ live near the sea, but we moved.","use to","used to","were use to","B","Use “used to + base verb” for past habits or states that changed."],["Passive voice: present","English ___ in many countries.","speaks","is spoken","is speaking","B","Present simple passive is am/is/are + past participle."],["Reported speech: statements","“I'm tired,” she said. She said she ___ tired.","is","was","has been","B","Reported speech often shifts present “am” to past “was.”"],["Relative clauses: who","The teacher ___ helped me was kind.","which","who","where","B","Use “who” for people in a relative clause."],["Gerund after suggest","He suggested ___ a taxi.","take","to take","taking","C","“Suggest” is followed by a gerund when proposing an activity."],["Make/let + object","They let us ___ early.","leave","to leave","leaving","A","“Let” is followed by an object and the base verb."],["Wish: present regret","I wish I ___ taller.","am","were","will be","B","Use wish + past simple to describe a present situation you want to be different."],["Although/despite","___ the rain, the match continued.","Although","Despite","However","B","Use “despite” before a noun phrase, not a full clause."],["Question tags","You're coming tomorrow, ___?","are you","aren't you","don't you","B","A positive statement usually takes a negative question tag."],["Indirect questions","Could you tell me where the station ___?","is","is it","does it","A","Indirect questions use statement word order: subject before verb."],["Modals of deduction","The lights are off. They ___ be at home.","must","can't","should","B","“Can't” expresses a strong belief that something is impossible."],["Second conditional: result","If she studied more, she ___ the exam.","passes","would pass","will pass","B","Use would + base verb in the result clause of the second conditional."],["Future arrangements","I'm ___ my dentist at 3 tomorrow.","see","seeing","seen","B","Present continuous can describe a fixed future arrangement."],["Phrasal verbs","Could you ___ the volume? It's too loud.","turn down","turn into","turn over","A","“Turn down” means reduce the volume."],["Articles: general meaning","___ honesty is important in friendship.","A","An","— (no article)","C","Use no article for abstract nouns used in a general sense."],["So/such","It was ___ an interesting talk that I took notes.","so","such","too","B","Use “such + a/an + adjective + singular noun.”"]],"B2":[["Mixed conditional","If he'd studied medicine, he ___ a doctor now.","would be","will be","would have been","A","A past condition with a present result uses a mixed conditional."],["Third conditional","If we had left earlier, we ___ the train.","would catch","would have caught","will have caught","B","Use would have + past participle for an unreal past result."],["Past modals: deduction","She ___ have forgotten; she wrote it in her diary.","must","can't","shouldn't","B","“Can't have + past participle” expresses a strong negative deduction about the past."],["Passive: modal","The form ___ by Friday.","must submit","must be submitted","must have submit","B","Modal passive uses modal + be + past participle."],["Causative have","I had my laptop ___ yesterday.","repair","repaired","repairing","B","“Have something done” means arrange for someone else to do it."],["Inversion with rarely","Rarely ___ such a beautiful performance.","I have seen","have I seen","I saw","B","A fronted negative adverbial triggers subject–auxiliary inversion."],["Wish: past regret","I wish I ___ that email yesterday.","didn't send","hadn't sent","wouldn't send","B","Use wish + past perfect to express regret about a past action."],["Reporting verbs","He denied ___ the window.","to break","breaking","break","B","“Deny” is followed by a gerund."],["Participle clauses","___ the report, she sent it to the director.","Having finished","Have finished","To finishing","A","“Having + past participle” shows an earlier completed action."],["Cleft sentences","It was Maya ___ solved the puzzle.","which","whose","who","C","Use “It was + person + who” to emphasize a person."],["Although/even though","___ he was exhausted, he kept working.","Despite","Even though","In spite","B","“Even though” introduces a complete clause with subject and verb."],["Future perfect","By next June, I ___ here for ten years.","will work","will have worked","have worked","B","Future perfect describes a duration completed by a future point."],["Future continuous","This time tomorrow, we ___ over the Alps.","will fly","will be flying","have flown","B","Future continuous describes an action in progress at a future time."],["No sooner…than","No sooner ___ than the lights went out.","we arrived","had we arrived","we had arrive","B","“No sooner” at the beginning requires inversion and is followed by “than.”"],["Unless","You won't pass ___ you revise.","if","unless","provided","B","“Unless” means “if not”; here it gives the condition for passing."],["Articles with institutions","She went to ___ university to meet a professor.","a","an","the","A","Use “a” before the consonant sound /j/ in “university.”"],["Emphasis with do","I ___ understand your concern.","do","am","have","A","“Do” can emphasize a statement in the present simple."],["Would rather","I'd rather you ___ me before visiting.","call","called","will call","B","“Would rather + subject” commonly takes past simple for a preference about now or the future."],["Needn't have / didn't need to","You ___ bought milk; we already had plenty.","needn't have","didn't need","mustn't have","A","“Needn't have + past participle” means the action happened but was unnecessary."],["Quantifiers","Only a ___ of applicants met the criteria.","few","little","amount","A","Use “a few” with countable plural nouns."]],"C1":[["If vs whether","We haven't decided ___ to stay or leave.","if","whether","that","B","“Whether” is especially natural before “or” when presenting alternatives."],["Mandative subjunctive","The committee recommended that he ___ present.","is","be","was","B","Formal mandative subjunctive uses the base form after “recommend that.”"],["Inversion: not until","Not until midnight ___ the truth.","she discovered","did she discover","she had discover","B","Fronted “not until” triggers auxiliary–subject inversion."],["Advanced concession","Much ___ I admire her, I disagree with her conclusion.","as","although","despite","A","“Much as” is a formal concessive construction meaning “although.”"],["Participle clause: passive","___ by the unexpected result, the team reviewed its plan.","Surprising","Surprised","Having surprise","B","Use a past participle adjective for the people affected: “surprised.”"],["Reduced relative clause","The documents ___ yesterday are on your desk.","which signed","signed","were signed","B","A passive relative clause can be reduced to a past participle: “documents signed yesterday.”"],["Advanced reporting","The minister is believed ___ abroad.","to be","being","that is","A","A passive reporting structure can use “is believed to be.”"],["Inversion: only after","Only after the meeting ___ the implications.","we understood","did we understand","we had understood","B","A fronted “only after” phrase triggers inversion in the main clause."],["Subjunctive: insist","She insisted that the report ___ rewritten.","is","be","was","B","In formal English, “insist that” can take the base-form subjunctive."],["Should in formal clauses","It is vital that every member ___ informed.","is","be","was","B","The formal subjunctive “be” is used after expressions of importance."],["Ellipsis and substitution","I thought the meeting was today, but it ___.","isn't","wasn't","didn't","B","Use “wasn't” to substitute for the past-tense idea “was today.”"],["Inversion with little","Little ___ that the decision would change everything.","they knew","did they know","they had known","B","“Little” at the start of a clause triggers inversion."],["Complex prepositions","The policy was changed ___ response to public concern.","in","on","at","A","The fixed expression is “in response to.”"],["Nominalisation","The committee decided to postpone. Its ___ surprised us.","decide","decision","decisive","B","“Decision” is the noun form of “decide.”"],["Hedging","The results ___ suggest a possible link.","may","must","will","A","“May suggest” appropriately signals a tentative interpretation."],["Cohesion: nevertheless","The evidence was limited; ___, the finding was noteworthy.","therefore","nevertheless","for example","B","“Nevertheless” marks contrast with the preceding point."],["Inversion with under no circumstances","Under no circumstances ___ confidential data.","you should share","should you share","you share","B","A fronted negative phrase requires subject–auxiliary inversion."],["Perfect infinitive","He seems ___ the instructions.","to misunderstand","to have misunderstood","having misunderstood","B","Use a perfect infinitive for an action that happened before the seeming."],["Conditional inversion","Were the plan ___, we would need more staff.","to succeed","succeeding","succeeded","A","“Were + subject + to-infinitive” is a formal hypothetical conditional."],["Fronted adjective","So compelling ___ that the jury listened in silence.","was her argument","her argument was","did her argument","A","“So + adjective” fronting can trigger inversion: “So compelling was her argument…”"]],"C2":[["Inverted third conditional","Had I known, I ___ you earlier.","would tell","would have told","will have told","B","“Had I known” is an inverted third conditional; the result is “would have told.”"],["Inversion: not only","Not only ___ the deadline, but she also improved the draft.","she met","did she meet","she had met","B","“Not only” at the start of a clause triggers auxiliary–subject inversion."],["Subjunctive after lest","They left early lest they ___ the last train.","miss","missed","would miss","A","Formal “lest” clauses often use the base-form subjunctive."],["Inverted conditional: should","Should you ___ further assistance, contact the office.","require","required","requiring","A","“Should you require” is a formal inversion of “if you should require.”"],["Concessive inversion","Try as he ___, he could not solve the puzzle.","might","may","would","A","“Try as he might” is a fixed concessive inversion."],["Negative inversion: at no time","At no time ___ informed of the change.","we were","were we","we had","B","A fronted negative phrase requires inversion."],["Cleft emphasis","What the report fails to explain ___ why costs rose so sharply.","are","is","have been","B","The clause “what the report fails to explain” is singular here, so use “is.”"],["Advanced ellipsis","She can analyse the data better than I ___.","can","do","am","A","Repeat the modal “can” to avoid repeating the main verb phrase."],["Modal perfect nuance","You ___ have told me; I could have helped.","might","should","can","B","“Should have told” expresses a past action that was advisable but did not happen."],["Counterfactual inversion","Were it not for her notes, we ___ the key detail.","would miss","would have missed","will miss","B","“Were it not for” describes a counterfactual condition; the context points to a missed past outcome."],["Advanced concession: for all","For all ___ expertise, he overlooked a basic error.","his","although his","despite he had","A","“For all + noun phrase” means “despite” or “in spite of.”"],["Fronting with such","Such ___ that the audience remained silent.","was the tension","the tension was","did the tension","A","“Such was + noun” is a formal fronting pattern."],["Inversion: scarcely","Scarcely ___ when the alarm sounded.","had we sat down","we had sat down","did we sat down","A","“Scarcely had + subject + past participle” is followed by “when.”"],["Advanced determiners","Not a single objection ___ during the hearing.","was raised","raised","had raising","A","The passive form is appropriate because the objection receives the action."],["Subjunctive after demand","The union demanded that the clause ___ removed.","is","be","was","B","Formal mandative subjunctive uses the base form “be.”"],["Complex preposition","The proposal was rejected ___ the grounds that it was too costly.","on","in","at","A","The fixed phrase is “on the grounds that.”"],["Inversion with only then","Only then ___ how serious the error was.","I realised","did I realise","I had realise","B","“Only then” at the beginning triggers inversion."],["Advanced comparison","The more carefully you edit, ___ errors remain.","the fewer","fewer the","the less","A","Use “the + comparative, the + comparative”; “errors” is countable."],["Participle clause: perfect passive","___ the final figures, the analyst issued a correction.","Having checked","Having been checked","Checked having","B","Use “having been + past participle” when the subject received the earlier action."],["Formal conditional: but for","But for the witness's statement, the case ___ dismissed.","would have been","will be","would be","A","“But for” introduces a counterfactual condition; this context refers to a past result."]]};
+
+const topic=$("topic");let scenes=[],current=0,animation=null,recording=false;
+function fillTopics(){
+  const levelSelect=$("level"), topicSelect=$("topic");
+  if(!levelSelect || !topicSelect) throw new Error("Level or topic dropdown is missing.");
+  const level=levelSelect.value;
+  const list=bank[level];
+  if(!Array.isArray(list) || !list.length) throw new Error("No topics are available for "+level+".");
+  topicSelect.replaceChildren();
+  list.forEach((item,index)=>{
+    if(!Array.isArray(item) || item.length<7) return;
+    const option=document.createElement("option");
+    option.value=String(index);
+    option.textContent=item[0];
+    option.dataset.topicIndex=String(index);
+    topicSelect.appendChild(option);
+  });
+  if(!topicSelect.options.length) throw new Error("Topic list contains no valid entries.");
+  topicSelect.value=topicSelect.options[0].value;
+  const count=$("topicCount");
+  if(count) count.textContent=topicSelect.options.length+" grammar topics available for "+level+" · silent MP4 video export";
+  loadTopic();
+}
+function loadTopic(){
+  const level=$("level").value, topicSelect=$("topic"), list=bank[level]||[];
+  const selected=topicSelect.options[topicSelect.selectedIndex];
+  const index=selected ? Number(selected.dataset.topicIndex ?? selected.value) : -1;
+  const item=Number.isInteger(index) ? list[index] : null;
+  if(!item || item.length<7) throw new Error("Selected topic data is missing. Please choose the topic again.");
+  $("headline").value=item[0]+" — quick grammar challenge";
+  $("question").value=item[1];
+  $("optA").value=item[2]; $("optB").value=item[3]; $("optC").value=item[4];
+  $("answer").value=item[5]; $("explanation").value=item[6];
+  // Display the actual loaded row beside the dropdown to catch mismatches immediately.
+  const count=$("topicCount");
+  if(count) count.textContent="Loaded: "+item[0]+" · "+level+" · "+list.length+" topics";
+}
+
+function values(){
+  const levelEl=$("level"), topicEl=$("topic");
+  const level=levelEl ? levelEl.value : "A1";
+  const list=bank[level]||[];
+  const idx=topicEl ? Number(topicEl.value) : 0;
+  const item=list[idx] || list[0];
+  if(!item) throw new Error("No topic is available for "+level+". Please change the level and try again.");
+  return {
+    kind:$("kind").value,
+    level,
+    topic:item[0],
+    headline:$("headline").value.trim(),
+    question:$("question").value.trim(),
+    opts:[$("optA").value.trim(),$("optB").value.trim(),$("optC").value.trim()],
+    answer:$("answer").value,
+    explanation:$("explanation").value.trim(),
+    duration:Number($("duration").value)||20,
+    voice:"none"
+  };
+}
+function buildScenes(){
+  const build=$("build");
+  const preview=$("canvas");
+  if(!preview || !preview.getContext){setStatus("Preview is unavailable in this browser. Open this file directly in Chrome.");return false;}
+  try{
+    setStatus("Building scenes…");
+    if(build){build.disabled=true;build.textContent="Building…";}
+    const v=values();
+    if(!v.question){if(build){build.disabled=false;build.textContent="Build scenes";}setStatus("Please add a question or lesson example.");return false;}
+    if(!v.explanation){if(build){build.disabled=false;build.textContent="Build scenes";}setStatus("Please add an explanation or key point.");return false;}
+    if(v.kind==="quiz"){
+      const answerIndex=Math.max(0,"ABC".indexOf(v.answer));
+      scenes=[
+        {type:"hook",title:v.headline||"Can you answer this grammar question?",sub:v.level+" • "+v.topic},
+        {type:"question",title:"CHOOSE THE CORRECT ANSWER",sub:v.question,opts:v.opts},
+        {type:"reveal",title:"ANSWER: "+v.answer,sub:v.opts[answerIndex],opts:v.opts},
+        {type:"explain",title:"WHY IS IT CORRECT?",sub:v.explanation,cta:"Save this • Follow for more"}
+      ];
+    }else{
+      scenes=[
+        {type:"hook",title:v.headline||v.topic,sub:v.level+" • MINI GRAMMAR LESSON"},
+        {type:"example",title:"EXAMPLE",sub:v.question},
+        {type:"key-point",title:"KEY POINT",sub:v.explanation},
+        {type:"practice",title:"TRY IT YOURSELF",sub:"Pause the video and write your own example.",cta:"Save this lesson • Follow for more"}
+      ];
+    }
+    current=0;
+    const navEl=$("sceneNav");
+    navEl.innerHTML="";
+    scenes.forEach((scene,i)=>{
+      const b=document.createElement("button");
+      b.type="button"; b.className="secondary"; b.textContent=(i+1)+". "+scene.type;
+      b.addEventListener("click",()=>{current=i;safeRender();});
+      navEl.appendChild(b);
+    });
+    safeRender();
+    setStatus("Success: "+scenes.length+" scenes built. Tap a scene button or scroll to the preview.");
+    if(build){build.textContent="Build scenes ✓";build.disabled=false;}
+    return true;
+  }catch(err){
+    console.error("Build scenes failed:",err);
+    if(build){build.textContent="Build scenes";build.disabled=false;}
+    setStatus("Build failed: "+(err&&err.message?err.message:String(err))+". Try changing the topic, then tap Build scenes again.");
+    return false;
+  }
+}
+function safeRender(){
+  try{render();}
+  catch(err){
+    console.error("Preview render failed:",err);
+    setStatus("Scenes were created, but preview drawing failed: "+(err&&err.message?err.message:String(err)));
+  }
+}
+
+function wrap(ctx,text,maxWidth){const words=String(text||"").split(/\s+/);let lines=[],line="";for(const word of words){const test=line?line+" "+word:word;if(ctx.measureText(test).width>maxWidth&&line){lines.push(line);line=word}else line=test}if(line)lines.push(line);return lines}
+function drawText(ctx,text,x,y,maxWidth,lineHeight,maxLines=6){let lines=wrap(ctx,text,maxWidth).slice(0,maxLines);lines.forEach((line,i)=>ctx.fillText(line,x,y+i*lineHeight));return lines.length*lineHeight}
+function render(){const c=$("canvas"),ctx=c.getContext("2d"),v=values(),s=scenes[current]||{type:"hook",title:"English Grammar Studio",sub:"Build scenes to begin"};const grad=ctx.createLinearGradient(0,0,540,960);grad.addColorStop(0,"#21143e");grad.addColorStop(.55,"#16122d");grad.addColorStop(1,"#0b2738");ctx.fillStyle=grad;ctx.fillRect(0,0,540,960);ctx.fillStyle="#67e8d5";ctx.fillRect(42,42,74,7);ctx.fillStyle="#f8f6ff";ctx.font="bold 22px system-ui";ctx.fillText("ENGLISH GRAMMAR STUDIO",42,88);ctx.fillStyle="#bcb5d4";ctx.font="bold 18px system-ui";ctx.fillText(v.level+"  •  "+v.topic.toUpperCase(),42,145);ctx.fillStyle="#b59cff";ctx.font="bold 23px system-ui";ctx.fillText(s.type.toUpperCase().replace("-"," "),42,235);ctx.fillStyle="#fff";ctx.font="bold 35px system-ui";let y=drawText(ctx,s.title,42,300,450,44,4)+300;ctx.fillStyle="#e5e0f5";ctx.font="28px system-ui";y+=24;y+=drawText(ctx,s.sub,42,y,450,38,7);if(s.opts){y+=25;ctx.font="bold 25px system-ui";s.opts.forEach((o,i)=>{ctx.fillStyle="#302847";ctx.fillRect(42,y,456,60);ctx.fillStyle="#67e8d5";ctx.fillText("ABC"[i]+".",58,y+39);ctx.fillStyle="#fff";ctx.font="24px system-ui";drawText(ctx,o,105,y+38,370,29,1);ctx.font="bold 25px system-ui";y+=78})}if(s.cta){ctx.fillStyle="#67e8d5";ctx.font="bold 20px system-ui";drawText(ctx,s.cta,42,850,450,28,2)}ctx.fillStyle="#bcb5d4";ctx.font="16px system-ui";ctx.fillText("ENGLISH GRAMMAR • "+(current+1)+"/"+Math.max(1,scenes.length),42,920)}
+function nav(n){if(!scenes.length)return;current=(current+n+scenes.length)%scenes.length;safeRender()}
+function scriptText(){return scenes.map((s,i)=>"SCENE "+(i+1)+" — "+s.type.toUpperCase()+"\n"+s.title+"\n"+s.sub+(s.opts?"\n"+s.opts.map((x,j)=>"ABC"[j]+". "+x).join("\n"):"")+(s.cta?"\n"+s.cta:"")).join("\n\n")}
+function download(blob,name){const a=document.createElement("a"),url=URL.createObjectURL(blob);a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500)}
 try {
-  const levelSelect = $("level");
-  const topicSelect = $("topic");
-  if (!levelSelect || !topicSelect) throw new Error("Required level/topic controls are missing.");
-  if (!topics[levelSelect.value]) levelSelect.value = "A1";
+  $("level").addEventListener("change",()=>{try{fillTopics();}catch(error){setStatus("Topic loading error: "+error.message);console.error(error)}});
+  $("topic").addEventListener("change",()=>{try{loadTopic();}catch(error){setStatus("Topic loading error: "+error.message);console.error(error)}});
+  $("kind").addEventListener("change",()=>{
+    $("optionsGroup").classList.toggle("hidden",$("kind").value==="lesson");
+    $("questionLabel").textContent=$("kind").value==="lesson"?"Lesson example":"Question / example";
+  });
+  $("build").type="button";
+  $("build").onclick=function(event){if(event)event.preventDefault();buildScenes();};
+  $("prev").addEventListener("click",()=>nav(-1));
+  $("next").addEventListener("click",()=>nav(1));
+  $("play").addEventListener("click",()=>{
+    if(!scenes.length) buildScenes();
+    if(!scenes.length) return;
+    if(animation) clearInterval(animation);
+    animation=setInterval(()=>nav(1),Math.max(2000,values().duration*250));
+    setStatus("Preview animation is playing.");
+    setTimeout(()=>{if(animation)clearInterval(animation);animation=null;},Math.max(2000,values().duration*1000));
+  });
+  $("poster").addEventListener("click",()=>{
+    if(!scenes.length) buildScenes();
+    if(scenes.length) $("canvas").toBlob(blob=>{if(blob)download(blob,"english-grammar-poster.png");});
+  });
+  $("script").addEventListener("click",()=>{
+    if(!scenes.length) buildScenes();
+    if(scenes.length) download(new Blob([scriptText()],{type:"text/plain;charset=utf-8"}),"english-grammar-script.txt");
+  });
+  async function loadFFmpeg(){
+    if(window.FFmpeg && window.FFmpeg.createFFmpeg) return window.FFmpeg;
+    setStatus("Loading MP4 converter (first use needs internet; please wait)…");
+    await new Promise((resolve,reject)=>{
+      const script=document.createElement("script");
+      script.src="https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.11.6/dist/ffmpeg.min.js";
+      script.onload=resolve;
+      script.onerror=()=>reject(new Error("Could not load the MP4 converter. Check internet and try again."));
+      document.head.appendChild(script);
+    });
+    if(!window.FFmpeg || !window.FFmpeg.createFFmpeg) throw new Error("MP4 converter did not initialize.");
+    return window.FFmpeg;
+  }
+  async function convertWebMToMP4(webmBlob){
+    const FFmpegLib=await loadFFmpeg();
+    const ffmpeg=FFmpegLib.createFFmpeg({
+      log:false,
+      mainName:"main",
+      corePath:"https://cdn.jsdelivr.net/npm/@ffmpeg/core-st@0.11.1/dist/ffmpeg-core.js"
+    });
+    if(!ffmpeg.isLoaded()) await ffmpeg.load();
+    const inputName="grammar-reel-input.webm", outputName="english-grammar-reel.mp4";
+    ffmpeg.FS("writeFile",inputName,new Uint8Array(await webmBlob.arrayBuffer()));
+    setStatus("Converting video to MP4. Keep this page open…");
+    await ffmpeg.run("-i",inputName,"-an","-c:v","libx264","-preset","ultrafast","-pix_fmt","yuv420p","-movflags","+faststart",outputName);
+    const data=ffmpeg.FS("readFile",outputName);
+    const mp4Blob=new Blob([data.buffer],{type:"video/mp4"});
+    try{ffmpeg.FS("unlink",inputName);ffmpeg.FS("unlink",outputName);}catch(_){}
+    return mp4Blob;
+  }
+  $("export").addEventListener("click",async()=>{
+    if(!scenes.length) buildScenes();
+    if(!scenes.length) return;
+    const c=$("canvas"),button=$("export");
+    if(!c.captureStream||!window.MediaRecorder){setStatus("Video recording is not supported in this browser. Please open this file in the latest Chrome.");return}
+    button.disabled=true;button.textContent="Preparing MP4…";
+    let stream=null;
+    try{
+      stream=c.captureStream(30);
+      let mime="video/webm;codecs=vp9";
+      if(!MediaRecorder.isTypeSupported(mime)) mime="video/webm";
+      const blob=await new Promise((resolve,reject)=>{
+        const rec=new MediaRecorder(stream,{mimeType:mime}),chunks=[];
+        rec.ondataavailable=e=>{if(e.data&&e.data.size)chunks.push(e.data)};
+        rec.onerror=e=>reject(new Error(e.error?.message||"Browser recording failed."));
+        rec.onstop=()=>resolve(new Blob(chunks,{type:mime}));
+        rec.start();
+        setStatus("Recording scenes… keep this page open.");
+        let i=0;
+        const next=()=>{
+          if(i>=scenes.length){setTimeout(()=>{if(rec.state!=="inactive")rec.stop();},500);return;}
+          current=i;safeRender();i++;setTimeout(next,Math.max(1800,Math.floor(values().duration*1000/scenes.length)));
+        };
+        next();
+      });
+      if(!blob.size) throw new Error("The recording was empty. Tap Build scenes and try again.");
+      button.textContent="Converting to MP4…";
+      const mp4=await convertWebMToMP4(blob);
+      download(mp4,"english-grammar-reel.mp4");
+      setStatus("MP4 ready and downloaded. The video is silent; add music or narration in your editor if desired.");
+    }catch(e){
+      console.error("MP4 export failed:",e);
+      setStatus("MP4 export failed: "+(e&&e.message?e.message:String(e))+". Check your internet connection, reopen in Chrome, and try again.");
+    }finally{
+      if(stream) stream.getTracks().forEach(t=>t.stop());
+      button.disabled=false;button.textContent="Export MP4 video";
+    }
+  });
   fillTopics();
-  if (!topicSelect.options.length) { levelSelect.value = "A1"; fillTopics(); }
-  buildScenes();
-} catch (error) {
-  const status = $("status");
-  if (status) status.textContent = "Studio setup error: " + error.message + " Refresh the page or open the site in Chrome.";
-  console.error("English Grammar Video Studio initialization failed:", error);
+  safeRender();
+  setStatus("Ready. Topic data loaded. Choose a topic, then tap Build scenes.");
+} catch(error) {
+  setStatus("Studio setup error: "+error.message+" Please reopen this file in Chrome.");
+  console.error("Studio setup error:",error);
 }
 </script>
-</body>
-</html>
+</body></html>
