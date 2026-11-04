@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#100d20">
-<title>English Grammar Video Studio — Upgrade 11 Recommended</title>
+<title>English Grammar Video Studio — Upgrade 13</title>
 <style>
 :root{--bg:#100d20;--panel:#1b1730;--line:#393252;--ink:#f8f6ff;--muted:#bcb5d4;--accent:#b59cff;--mint:#67e8d5}
 *{box-sizing:border-box}body{margin:0;background:linear-gradient(150deg,#100d20,#17112e 60%,#101d31);color:var(--ink);font:16px/1.45 system-ui,-apple-system,Segoe UI,sans-serif}
@@ -24,9 +24,9 @@ textarea{min-height:70px;resize:vertical}button{border:0;border-radius:11px;padd
 <body>
 <main>
 <header>
-<span class="pill">UPGRADE 11 · RECOMMENDED UPDATE · MP4 EXPORT</span>
+<span class="pill">UPGRADE 13 · EXPORT VALIDATION · QUALITY CHECK · PROJECT SAVE</span>
 <h1>English Grammar Video Studio</h1>
-<p>Create vertical 9:16 grammar Reels in three formats: advanced quizzes, Spot the Mistake challenges, and mini lessons. Scene timing and answer reveals are automated.</p>
+<p>Create vertical 9:16 grammar Reels in three formats: advanced quizzes, Spot the Mistake challenges, and mini lessons. Upgrade 13 strengthens Android export handling, validates genuine MP4 files, and keeps WebM clearly separate as a fallback. It retains quality checks, local project saving, and Facebook caption/hashtag generation.</p>
 </header>
 <div class="layout">
 <section class="panel">
@@ -53,6 +53,20 @@ textarea{min-height:70px;resize:vertical}button{border:0;border-radius:11px;padd
 <label for="brand">Page branding</label><input id="brand" value="ENGLISH GRAMMAR SCOPE">
 <div class="actions"><button id="build">Build scenes</button></div>
 <div class="status" id="status" role="status" aria-live="polite">Ready. Edit the content, then build scenes.</div>
+<details class="tip" style="margin-top:12px">
+<summary style="cursor:pointer;color:#e3ddf7;font-weight:750">Production tools · Quality check · Save project</summary>
+<div class="actions">
+<button class="secondary" id="quality">Run quality check</button>
+<button class="secondary" id="saveProject">Save project</button>
+<button class="secondary" id="loadProject">Load saved project</button>
+<button class="secondary" id="resetProject">Reset editor</button>
+</div>
+<label for="caption">Facebook caption</label>
+<textarea id="caption" readonly placeholder="Build your scenes, then generate a caption here."></textarea>
+<div class="actions"><button class="secondary" id="makeCaption">Generate caption + hashtags</button><button class="secondary" id="copyCaption">Copy caption</button></div>
+<p class="note">Project settings are saved in this browser on this device. They are not uploaded to a server. Quality Check reviews content completeness, choice structure and likely text-fit risks; it cannot replace a human grammar review.</p>
+<div class="status" id="qualityStatus" role="status" aria-live="polite">Run the check before exporting.</div>
+</details>
 <p class="note">Changing the level or topic loads a fresh matching example, answer and explanation. For Spot the Mistake, keep the blank (___) in the sentence and use three different answer choices. Review the finished Reel before publishing.</p>
 </section>
 <section class="panel">
@@ -62,7 +76,7 @@ textarea{min-height:70px;resize:vertical}button{border:0;border-radius:11px;padd
 <div class="actions"><button class="secondary" id="prev">← Previous</button><button class="secondary" id="next">Next →</button><button id="play">▶ Play timed preview</button></div>
 <div class="actions"><button id="export">Export downloadable MP4</button><button class="secondary" id="poster">Save poster PNG</button></div>
 <div class="status" id="exportStatus">Preview is ready. Build scenes to begin.</div>
-<div class="tip">MP4 conversion runs on your device and can use substantial memory. Keep this page open and connected to the internet. On Android, use an updated Chrome browser and close other tabs first. If conversion cannot complete, the studio downloads the original WebM recording instead; WebM is not an MP4.</div>
+<div class="tip">MP4 conversion runs on your device and may use substantial memory. The studio checks the MP4 container before naming a file .mp4. If conversion fails, it downloads a separately named .webm file and clearly reports that it is not MP4. Export is silent. On Android, use updated Chrome, keep this page open, maintain a stable connection, and close other apps/tabs before exporting.</div>
 </section>
 </div>
 </main>
@@ -212,7 +226,23 @@ function weights(){let k=values().kind,m=values().timing;if(k==="mistake")return
 function sceneDurations(){const w=weights(),total=w.reduce((a,b)=>a+b,0),ms=values().duration*1000;let used=0;return w.map((x,i)=>{if(i===w.length-1)return ms-used;const d=Math.round(ms*x/total);used+=d;return d})}
 function sceneMs(i){return sceneDurations()[i]||1000}
 function play(){if(!scenes.length)buildScenes();if(!scenes.length)return;stopPlayback();let i=0;function step(){if(i>=scenes.length){setStatus("Preview finished.","exportStatus");return}current=i;reveal=0;let start=performance.now(),dur=sceneMs(i);function frame(now){reveal=Math.min(1,(now-start)/850);render();if(now-start<dur)raf=requestAnimationFrame(frame);else{i++;playTimer=setTimeout(step,0)}}raf=requestAnimationFrame(frame)}setStatus("Playing with automatic scene timing.","exportStatus");step()}
-function download(blob,name){let a=document.createElement("a"),u=URL.createObjectURL(blob);a.href=u;a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),5000)}
+function download(blob,name){
+ const url=URL.createObjectURL(blob),a=document.createElement("a");
+ a.href=url;a.download=name;a.style.display="none";document.body.append(a);a.click();a.remove();
+ setTimeout(()=>URL.revokeObjectURL(url),30000);
+}
+function chooseRecordingMime(){
+ const candidates=["video/webm;codecs=vp9","video/webm;codecs=vp8","video/webm"];
+ for(const type of candidates){try{if(MediaRecorder.isTypeSupported(type))return type}catch(e){}}
+ return "";
+}
+async function validateMP4(blob){
+ if(!(blob instanceof Blob)||blob.size<12000)throw Error("The converted file is empty or unexpectedly small.");
+ if(blob.type!=="video/mp4")throw Error("The converter did not return the video/mp4 MIME type.");
+ const b=new Uint8Array(await blob.slice(0,64).arrayBuffer());
+ if(b.length<12||String.fromCharCode(...b.slice(4,8))!=="ftyp")throw Error("The file does not contain a valid MP4 container signature.");
+ return blob;
+}
 async function loadFFmpeg(){
  if(window.FFmpeg?.createFFmpeg)return window.FFmpeg;
  setStatus("Loading MP4 converter…","exportStatus");
@@ -224,10 +254,10 @@ async function toMP4(blob){
  if(!f.isLoaded())await f.load();
  try{
   f.FS("writeFile","in.webm",new Uint8Array(await blob.arrayBuffer()));
-  setStatus("Converting to MP4. Keep this page open…","exportStatus");
-  await f.run("-i","in.webm","-an","-c:v","libx264","-preset","ultrafast","-pix_fmt","yuv420p","-movflags","+faststart","out.mp4");
+  setStatus("Converting and validating MP4. Keep this page open…","exportStatus");
+  await f.run("-y","-i","in.webm","-map","0:v:0","-an","-c:v","libx264","-preset","ultrafast","-crf","25","-pix_fmt","yuv420p","-movflags","+faststart","-f","mp4","out.mp4");
   let data=f.FS("readFile","out.mp4"),out=new Blob([data],{type:"video/mp4"});
-  if(!out.size)throw Error("MP4 conversion produced an empty file.");
+  await validateMP4(out);
   return out;
  }finally{
   try{f.FS("unlink","in.webm")}catch(e){}
@@ -235,8 +265,8 @@ async function toMP4(blob){
  }
 }
 function recordCanvas(){
- const canvas=$("canvas"),stream=canvas.captureStream(30),mime=MediaRecorder.isTypeSupported("video/webm;codecs=vp9")?"video/webm;codecs=vp9":"video/webm";
- return new Promise((resolve,reject)=>{let rec;try{rec=new MediaRecorder(stream,{mimeType:mime})}catch(e){stream.getTracks().forEach(t=>t.stop());reject(e);return}
+ const canvas=$("canvas"),stream=canvas.captureStream(30),mime=chooseRecordingMime();
+ return new Promise((resolve,reject)=>{let rec;try{rec=new MediaRecorder(stream,mime?{mimeType:mime}:{})}catch(e){stream.getTracks().forEach(t=>t.stop());reject(Error("This browser cannot start video recording: "+e.message));return}
  let chunks=[];rec.ondataavailable=e=>{if(e.data?.size)chunks.push(e.data)};rec.onerror=()=>reject(Error("Browser recording failed."));rec.onstop=()=>{stream.getTracks().forEach(t=>t.stop());resolve(new Blob(chunks,{type:mime}))};
  rec.start(250);let i=0;function next(){if(i>=scenes.length){setTimeout(()=>{if(rec.state!=="inactive")rec.stop()},50);return}
  current=i;reveal=0;let start=performance.now(),dur=sceneMs(i);function frame(now){reveal=Math.min(1,(now-start)/850);render();if(now-start<dur)requestAnimationFrame(frame);else{i++;next()}}requestAnimationFrame(frame)}next()
@@ -248,18 +278,100 @@ async function exportMP4(){
  exporting=true;let btn=$("export");btn.disabled=true;btn.textContent="Preparing video…";
  try{
  const recorded=await recordCanvas();if(!recorded.size)throw Error("The recording was empty.");
- try{const mp4=await toMP4(recorded);download(mp4,"english-grammar-scope-reel.mp4");setStatus("MP4 downloaded ("+values().duration+" seconds, silent). Play the file once to check it before posting.","exportStatus")}
- catch(conversionError){download(recorded,"english-grammar-scope-reel.webm");setStatus("MP4 conversion was unavailable: "+conversionError.message+" A WebM recording has been downloaded instead, not an MP4. Retry in updated Chrome with fewer apps/tabs open.","exportStatus")}
- }catch(e){setStatus("Export failed: "+e.message+". Keep the page open and try again.","exportStatus")}
+ const webm=new Blob([recorded],{type:recorded.type||"video/webm"});
+ try{
+  const mp4=await toMP4(webm);await validateMP4(mp4);
+  download(mp4,"english-grammar-scope-reel.mp4");
+  setStatus("Verified MP4 downloaded ("+values().duration+" seconds, silent). Check playback before posting.","exportStatus");
+ }catch(conversionError){
+  download(webm,"english-grammar-scope-reel.webm");
+  setStatus("A valid MP4 could not be created: "+conversionError.message+" A separate WebM file was downloaded. It has NOT been renamed as MP4. Try updated Chrome, a stable connection, and fewer open apps.","exportStatus");
+ }
+ }catch(e){setStatus("Export failed: "+e.message+". No MP4 was created. Keep the page open and try again.","exportStatus")}
  finally{exporting=false;btn.disabled=false;btn.textContent="Export downloadable MP4";render()}
 }
-$("level").addEventListener("change",populateTopics);
-$("topic").addEventListener("change",()=>{applyTopicPreset();setStatus("Loaded a topic-matched example. Review and edit it before building.")});
-$("kind").addEventListener("change",()=>{$("quizFields").classList.toggle("hidden",$("kind").value==="lesson")});
+
+const PROJECT_KEY="egvs_upgrade13_project";
+function projectData(){
+ return {
+  kind:$("kind").value, level:$("level").value, topic:$("topic").value,
+  headline:$("headline").value, question:$("question").value,
+  optA:$("optA").value,optB:$("optB").value,optC:$("optC").value,
+  answer:$("answer").value, explanation:$("explanation").value,
+  duration:$("duration").value,timing:$("timing").value,
+  revealMotion:$("revealMotion").value,brand:$("brand").value
+ };
+}
+function applyProject(d){
+ if(!d||typeof d!=="object")throw Error("Saved project data is not valid.");
+ const allowed={kind:["quiz","mistake","lesson"],level:["A1","A2","B1","B2","C1","C2"],duration:["12","15","20","30"],timing:["fast","balanced","learning"],revealMotion:["on","off"],answer:["A","B","C"]};
+ for(const [k,vals] of Object.entries(allowed)){if(d[k]!==undefined&&!vals.includes(String(d[k])))throw Error("Invalid saved setting: "+k);}
+ if(d.level){$("level").value=d.level;populateTopics();}
+ if(d.topic&&[...$("topic").options].some(o=>o.value===d.topic))$("topic").value=d.topic;
+ for(const k of ["kind","headline","question","optA","optB","optC","answer","explanation","duration","timing","revealMotion","brand"]){
+  if(d[k]!==undefined)$(k).value=d[k];
+ }
+ $("quizFields").classList.toggle("hidden",$("kind").value==="lesson");
+ stopPlayback();scenes=[];current=0;renderNav();render();
+}
+function saveProject(show=true){
+ try{localStorage.setItem(PROJECT_KEY,JSON.stringify(projectData()));if(show)setStatus("Project settings saved on this device.","qualityStatus");}
+ catch(e){setStatus("Could not save in this browser. Check available storage.","qualityStatus");}
+}
+function loadProject(){
+ try{const raw=localStorage.getItem(PROJECT_KEY);if(!raw){setStatus("No saved project was found on this device.","qualityStatus");return;}applyProject(JSON.parse(raw));setStatus("Saved project loaded. Build scenes to refresh the preview.","qualityStatus");}
+ catch(e){setStatus("Could not load the saved project: "+e.message,"qualityStatus");}
+}
+function qualityCheck(){
+ const v=values(),issues=[],notes=[];
+ if(!v.headline)issues.push("Add an opening hook or title.");
+ if(!v.question)issues.push("Add a question or example sentence.");
+ if(!v.explanation)issues.push("Add a grammar explanation.");
+ if(v.kind!=="lesson"){
+  if(v.opts.some(x=>!x))issues.push("Complete all three answer choices.");
+  if(new Set(v.opts.map(x=>x.toLowerCase())).size!==3)issues.push("Answer choices must be three distinct options.");
+  if(!"ABC".includes(v.answer))issues.push("Choose a valid correct-answer option.");
+ }
+ if(v.kind==="mistake"&&!v.question.includes("___"))issues.push("Spot the Mistake needs a ___ placeholder.");
+ if(v.question.length>155)notes.push("The question/example may need smaller text or shorter wording.");
+ if(v.explanation.length>260)notes.push("The explanation may be too long for comfortable Reel reading.");
+ if(v.headline.length>65)notes.push("The opening title may wrap into too many lines.");
+ if($("brand").value.trim().length>28)notes.push("The watermark is shortened to 28 characters in the video.");
+ if(!scenes.length)notes.push("Build scenes after fixing any issues, then inspect every scene.");
+ if(issues.length){
+  setStatus("Needs attention:\n• "+issues.join("\n• ")+(notes.length?"\n\nReview:\n• "+notes.join("\n• "):""),"qualityStatus");
+ }else{
+  setStatus("No structural problems found."+(notes.length?" Review these points:\n• "+notes.join("\n• "):"")+" Grammar still needs a human review before publishing.","qualityStatus");
+ }
+}
+function makeCaption(){
+ const v=values(),title=v.topic||"English Grammar Challenge";
+ const caption=(v.kind==="lesson"?"Learn English grammar with this quick lesson: ":"Try this English grammar challenge: ")+title+".\n\n"+
+ "What is your answer? Share it in the comments and follow "+($("brand").value.trim()||"English Grammar Scope")+" for more English grammar content.\n\n"+
+ "#EnglishGrammar #LearnEnglish #GrammarQuiz #EnglishLearning #"+v.level;
+ $("caption").value=caption;
+}
+function copyCaption(){
+ const t=$("caption").value;if(!t){setStatus("Generate a caption first.","qualityStatus");return;}
+ if(navigator.clipboard?.writeText){navigator.clipboard.writeText(t).then(()=>setStatus("Caption copied.","qualityStatus")).catch(()=>setStatus("Copy was blocked by the browser. Select the caption and copy it manually.","qualityStatus"));}
+ else{ $("caption").focus();$("caption").select();setStatus("Select the caption and use your browser's Copy command.","qualityStatus");}
+}
+
+
+$("quality").onclick=qualityCheck;
+$("saveProject").onclick=()=>saveProject(true);
+$("loadProject").onclick=loadProject;
+$("resetProject").onclick=()=>{if(confirm("Reset all editor fields and clear the saved project on this device?")){localStorage.removeItem(PROJECT_KEY);$("level").value="A1";populateTopics();$("kind").value="quiz";$("quizFields").classList.remove("hidden");$("duration").value="20";$("timing").value="balanced";$("revealMotion").value="on";$("brand").value="ENGLISH GRAMMAR SCOPE";$("caption").value="";scenes=[];current=0;renderNav();render();setStatus("Editor reset. Your saved local project was cleared.","qualityStatus");}};
+$("makeCaption").onclick=makeCaption;
+$("copyCaption").onclick=copyCaption;
+
+$("level").addEventListener("change",()=>{populateTopics();saveProject(false)});
+$("topic").addEventListener("change",()=>{applyTopicPreset();saveProject(false);setStatus("Loaded a topic-matched example. Review and edit it before building.")});
+$("kind").addEventListener("change",()=>{$("quizFields").classList.toggle("hidden",$("kind").value==="lesson");saveProject(false)});
 $("build").onclick=buildScenes;$("prev").onclick=()=>nav(-1);$("next").onclick=()=>nav(1);$("play").onclick=play;$("export").onclick=exportMP4;
 $("poster").onclick=()=>{if(!scenes.length)buildScenes();if(scenes.length)$("canvas").toBlob(b=>{if(b)download(b,"english-grammar-scope-poster.png")})};
-["headline","question","optA","optB","optC","answer","explanation","brand"].forEach(id=>$(id).addEventListener("input",()=>{if(scenes.length)render()}));
-$("revealMotion").addEventListener("change",render);
+["headline","question","optA","optB","optC","answer","explanation","brand"].forEach(id=>$(id).addEventListener("input",()=>{if(scenes.length)render();saveProject(false)}));
+$("revealMotion").addEventListener("change",()=>{render();saveProject(false)});
 populateTopics();render();
 </script>
 </body></html>
